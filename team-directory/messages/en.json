@@ -1,0 +1,19 @@
+{
+    "teamDirectory": {
+        "metadata": {
+            "title": "Team Directory",
+            "description": "A filterable and searchable list of all team members."
+        },
+        "filters": {
+            "searchPlaceholder": "Search by name...",
+            "roleFilter": "Filter by role",
+            "clearFilters": "Clear all"
+        },
+        "emptyState": "No team members found",
+        "loadMore": "Load more",
+        "previous": "Previous",
+        "next": "Next",
+        "page": "Page",
+        "of": "of"
+    }
+}

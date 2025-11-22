@@ -1,0 +1,19 @@
+{
+    "teamDirectory": {
+        "metadata": {
+            "title": "دليل الفريق",
+            "description": "قائمة قابلة للتصفية والبحث لجميع أعضاء الفريق."
+        },
+        "filters": {
+            "searchPlaceholder": "البحث بالاسم...",
+            "roleFilter": "تصفية حسب الدور",
+            "clearFilters": "مسح الكل"
+        },
+        "emptyState": "لم يتم العثور على أعضاء في الفريق",
+        "loadMore": "تحميل المزيد",
+        "previous": "السابق",
+        "next": "التالي",
+        "page": "الصفحة",
+        "of": "من"
+    }
+}
