@@ -164,13 +164,13 @@ export const TeamTable = ({
                                                                     : 'Sort'
                                                             }
                                                         >
-                                                            <span>
+                                                            <article>
                                                                 {flexRender(
                                                                     header.column.columnDef.header,
                                                                     header.getContext()
                                                                 )}
-                                                            </span>
-                                                            <span className="flex items-center" aria-hidden>
+                                                            </article>
+                                                            <article className="flex items-center" aria-hidden>
                                                                 {sortState === 'asc' ? (
                                                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                                                                         <path d="M7 14l5-5 5 5H7z" fill="currentColor" />
@@ -185,15 +185,15 @@ export const TeamTable = ({
                                                                         <path d="M7 14l5 5 5-5H7z" fill="currentColor" opacity="0.2" />
                                                                     </svg>
                                                                 )}
-                                                            </span>
+                                                            </article>
                                                         </button>
                                                     ) : (
-                                                        <span>
+                                                        <article>
                                                             {flexRender(
                                                                 header.column.columnDef.header,
                                                                 header.getContext()
                                                             )}
-                                                        </span>
+                                                        </article>
                                                     )
                                                 )}
                                             </th>

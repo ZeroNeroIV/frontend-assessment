@@ -60,14 +60,14 @@ export function TeamDirectoryClient() {
 
     if (error) {
         return (
-            <div className="text-center py-12">
-                <div className="text-red-500">Error: {error.message}</div>
-            </div>
+            <section className="text-center py-12">
+                <section className="text-red-500">Error: {error.message}</section>
+            </section>
         );
     }
 
     return (
-        <div className="space-y-8">
+        <section className="space-y-8">
             <TeamFilters />
 
             {viewMode === 'table' ? (
@@ -89,6 +89,6 @@ export function TeamDirectoryClient() {
                     totalPages={totalPages}
                 />
             )}
-        </div>
+        </section>
     );
 };

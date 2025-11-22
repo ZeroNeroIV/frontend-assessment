@@ -29,55 +29,55 @@ export const TeamGrid = ({
 
     if (loading) {
         return (
-            <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <section className="space-y-6">
+                <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {[...Array(6)].map((_, index) => (
-                        <div key={index} className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden animate-pulse">
-                            <div className="p-6">
-                                <div className="flex items-center gap-4">
-                                    <div className="h-16 w-16 rounded-full bg-slate-200"></div>
-                                    <div className="flex-1">
-                                        <div className="h-4 bg-slate-200 rounded w-3/4 mb-2"></div>
-                                        <div className="h-3 bg-slate-200 rounded w-1/2 mb-2"></div>
-                                        <div className="h-4 bg-slate-200 rounded w-16"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <section key={index} className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden animate-pulse">
+                            <section className="p-6">
+                                <section className="flex items-center gap-4">
+                                    <section className="h-16 w-16 rounded-full bg-slate-200"></section>
+                                    <section className="flex-1">
+                                        <section className="h-4 bg-slate-200 rounded w-3/4 mb-2"></section>
+                                        <section className="h-3 bg-slate-200 rounded w-1/2 mb-2"></section>
+                                        <section className="h-4 bg-slate-200 rounded w-16"></section>
+                                    </section>
+                                </section>
+                            </section>
+                        </section>
                     ))}
-                </div>
-                <div className="flex justify-between items-center p-4">
-                    <div className="h-4 bg-slate-200 rounded w-32"></div>
-                    <div className="flex space-x-2">
-                        <div className="h-8 w-20 bg-slate-200 rounded"></div>
-                        <div className="h-8 w-20 bg-slate-200 rounded"></div>
-                    </div>
-                </div>
-            </div>
+                </section>
+                <section className="flex justify-between items-center p-4">
+                    <section className="h-4 bg-slate-200 rounded w-32"></section>
+                    <section className="flex space-x-2">
+                        <section className="h-8 w-20 bg-slate-200 rounded"></section>
+                        <section className="h-8 w-20 bg-slate-200 rounded"></section>
+                    </section>
+                </section>
+            </section>
         );
     }
 
     if (data.length === 0) {
         return (
-            <div className="text-center py-12">
-                <div className="text-slate-500">{t('emptyState')}</div>
-            </div>
+            <section className="text-center py-12">
+                <section className="text-slate-500">{t('emptyState')}</section>
+            </section>
         );
     }
 
     return (
-        <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <section className="space-y-6">
+            <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {data.map((member) => (
                     <TeamMemberCard key={member.id} member={member} />
                 ))}
-            </div>
+            </section>
             {/* Pagination */}
-            <div className="flex justify-between items-center p-4">
-                <div className="text-sm text-slate-600">
+            <section className="flex justify-between items-center p-4">
+                <section className="text-sm text-slate-600">
                     {t('page')} {currentPage} {t('of')} {totalPages}
-                </div>
-                <div className="flex space-x-2">
+                </section>
+                <section className="flex space-x-2">
                     <button
                         className={`px-4 py-2 rounded-lg ${currentPage === 1
                             ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
@@ -98,8 +98,8 @@ export const TeamGrid = ({
                     >
                         {t('next')}
                     </button>
-                </div>
-            </div>
-        </div>
+                </section>
+            </section>
+        </section>
     );
 };

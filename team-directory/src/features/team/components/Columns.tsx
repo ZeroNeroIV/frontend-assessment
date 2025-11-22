@@ -10,9 +10,9 @@ export const columns: ColumnDef<TeamMember>[] = [
             const member = row.original;
             return (
                 <section className="flex items-center gap-4">
-                    <div className="relative h-10 w-10 rounded-full overflow-hidden border border-slate-200">
+                    <section className="relative h-10 w-10 rounded-full overflow-hidden border border-slate-200">
                         <Image src={member.avatar} alt={member.name} fill sizes="40px" className="object-cover" />
-                    </div>
+                    </section>
                     <article className="font-medium text-slate-900">{member.name}</article>
                 </section>
             );
