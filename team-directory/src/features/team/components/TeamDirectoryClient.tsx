@@ -8,22 +8,32 @@ import { useTeamStore } from '../stores/team-store';
 import { useEffect } from 'react';
 
 export function TeamDirectoryClient() {
-    const {
-        viewMode,
-        searchTerm,
-        roleFilter,
-        currentPage,
-        totalPages,
-        setCurrentPage,
-        setTotalPages
-    } = useTeamStore();
+    const viewMode = useTeamStore(state => state.viewMode);
+    const searchTerm = useTeamStore(state => state.searchTerm);
+    const roleFilter = useTeamStore(state => state.roleFilter);
+    const currentPage = useTeamStore(state => state.currentPage);
+    const totalPages = useTeamStore(state => state.totalPages);
+    const setCurrentPage = useTeamStore(state => state.setCurrentPage);
+    const setTotalPages = useTeamStore(state => state.setTotalPages);
+    const sortField = useTeamStore(state => state.sortField);
+    const sortOrder = useTeamStore(state => state.sortOrder);
+    const setSortField = useTeamStore(state => state.setSortField);
+    const setSortOrder = useTeamStore(state => state.setSortOrder);
 
-    const { data, loading, error, meta } = useTeamMembers({
+    // Trigger data fetching and subscribe to store for data
+    useTeamMembers({
         page: currentPage,
         limit: 10,
         search: searchTerm,
-        role: roleFilter
+        role: roleFilter,
+        sortField,
+        sortOrder,
     });
+
+    const data = useTeamStore(state => state.teamMembers);
+    const loading = useTeamStore(state => state.loading);
+    const error = useTeamStore(state => state.error);
+    const meta = useTeamStore(state => state.meta);
 
     // Update total pages in store when meta changes
     useEffect(() => {
@@ -34,6 +44,18 @@ export function TeamDirectoryClient() {
 
     const handlePaginationChange = (page: number) => {
         setCurrentPage(page);
+    };
+
+    const handleSortChange = (field: string | null, order: 'asc' | 'desc' | null) => {
+        setSortField(field);
+        setSortOrder(order);
+        // reset to first page when sorting changes so sorting applies to full dataset
+        setCurrentPage(1);
+    };
+
+    const handleLoadMore = () => {
+        // increment page to trigger fetch for next page; useTeamMembers will append when page increases
+        setCurrentPage(currentPage + 1);
     };
 
     if (error) {
@@ -53,6 +75,8 @@ export function TeamDirectoryClient() {
                     data={data}
                     loading={loading}
                     onPaginationChange={handlePaginationChange}
+                    onSortChange={handleSortChange}
+                    onLoadMore={handleLoadMore}
                     currentPage={currentPage}
                     totalPages={totalPages}
                 />

@@ -8,7 +8,7 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { type TeamTableProps } from '../types';
 import { columns } from './Columns';
 
@@ -17,7 +17,9 @@ export const TeamTable = ({
     loading,
     onPaginationChange,
     currentPage,
-    totalPages
+    totalPages,
+    onSortChange,
+    onLoadMore,
 }: TeamTableProps) => {
     const t = useTranslations('teamDirectory');
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -32,6 +34,26 @@ export const TeamTable = ({
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
     });
+
+    // Notify parent about sort changes so sorting can be applied globally (server-side)
+    const isFirst = useRef(true);
+    useEffect(() => {
+        if (typeof onSortChange !== 'function') return;
+        if (isFirst.current) {
+            isFirst.current = false;
+            return;
+        }
+
+        if (!sorting || sorting.length === 0) {
+            onSortChange(null, null);
+            return;
+        }
+
+        const top = sorting[0];
+        const field = String(top.id);
+        const order = top.desc ? 'desc' : 'asc';
+        onSortChange(field, order);
+    }, [sorting, onSortChange]);
 
     const handlePageChange = (newPage: number) => {
         if (newPage >= 1 && newPage <= totalPages) {
@@ -113,19 +135,70 @@ export const TeamTable = ({
                         <thead className="bg-slate-50">
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <tr key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => (
-                                        <th
-                                            key={header.id}
-                                            className="px-6 py-3 font-medium text-slate-900"
-                                        >
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext()
+                                    {headerGroup.headers.map((header) => {
+                                        const canSort = header.column.getCanSort();
+                                        const sortState = header.column.getIsSorted(); // 'asc' | 'desc' | false
+                                        const ariaSort = canSort
+                                            ? sortState === 'asc'
+                                                ? 'ascending'
+                                                : sortState === 'desc'
+                                                    ? 'descending'
+                                                    : 'none'
+                                            : undefined;
+
+                                        return (
+                                            <th
+                                                key={header.id}
+                                                className="px-6 py-3 font-medium text-slate-900"
+                                                aria-sort={ariaSort}
+                                            >
+                                                {header.isPlaceholder ? null : (
+                                                    canSort ? (
+                                                        <button
+                                                            type="button"
+                                                            onClick={header.column.getToggleSortingHandler()}
+                                                            className={`flex items-center gap-2 ${sortState ? 'text-sky-600 font-semibold' : 'text-slate-900'}`}
+                                                            aria-label={
+                                                                typeof sortState === 'string'
+                                                                    ? `Sort ${sortState}`
+                                                                    : 'Sort'
+                                                            }
+                                                        >
+                                                            <span>
+                                                                {flexRender(
+                                                                    header.column.columnDef.header,
+                                                                    header.getContext()
+                                                                )}
+                                                            </span>
+                                                            <span className="flex items-center" aria-hidden>
+                                                                {sortState === 'asc' ? (
+                                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                                                                        <path d="M7 14l5-5 5 5H7z" fill="currentColor" />
+                                                                    </svg>
+                                                                ) : sortState === 'desc' ? (
+                                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                                                                        <path d="M7 10l5 5 5-5H7z" fill="currentColor" />
+                                                                    </svg>
+                                                                ) : (
+                                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                                                                        <path d="M7 10l5-5 5 5H7z" fill="currentColor" opacity="0.4" />
+                                                                        <path d="M7 14l5 5 5-5H7z" fill="currentColor" opacity="0.2" />
+                                                                    </svg>
+                                                                )}
+                                                            </span>
+                                                        </button>
+                                                    ) : (
+                                                        <span>
+                                                            {flexRender(
+                                                                header.column.columnDef.header,
+                                                                header.getContext()
+                                                            )}
+                                                        </span>
+                                                    )
                                                 )}
-                                        </th>
-                                    ))}
+                                            </th>
+                                        );
+                                    })}
                                 </tr>
                             ))}
                         </thead>
@@ -172,6 +245,16 @@ export const TeamTable = ({
                     >
                         {t('next')}
                     </button>
+                    {onLoadMore && currentPage < totalPages && (
+                        <button
+                            className={`px-4 py-2 rounded-lg bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            onClick={onLoadMore}
+                            disabled={loading}
+                            aria-busy={loading}
+                        >
+                            {t('loadMore')}
+                        </button>
+                    )}
                 </section>
             </section>
         </section>

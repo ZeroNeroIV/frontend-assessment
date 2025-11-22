@@ -9,11 +9,11 @@ export async function generateMetadata({ params }: GenerateMetadataProps) {
     const messages = await getMessages({ locale });
 
     return {
-        title: messages['teamDirectory.metadata.title'],
-        description: messages['teamDirectory.metadata.description'],
+        title: messages.teamDirectory?.title || messages.teamDirectory?.metadata?.title,
+        description: messages.teamDirectory?.description || messages.teamDirectory?.metadata?.description,
         openGraph: {
-            title: messages['teamDirectory.metadata.title'],
-            description: messages['teamDirectory.metadata.description'],
+            title: messages.teamDirectory?.title || messages.teamDirectory?.metadata?.title,
+            description: messages.teamDirectory?.description || messages.teamDirectory?.metadata?.description,
             type: 'website',
         },
     };

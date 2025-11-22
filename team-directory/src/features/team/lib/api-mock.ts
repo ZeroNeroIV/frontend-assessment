@@ -6,6 +6,8 @@ export const fetchMockTeamMembers = async ({
     limit = 10,
     search = '',
     role = null,
+    sortField = null,
+    sortOrder = null,
 }: FetchOptions) => {
     // Simulate Network Delay (1s)
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -27,6 +29,24 @@ export const fetchMockTeamMembers = async ({
     // Filter by Role
     if (role && role !== 'All') {
         filteredData = filteredData.filter((member) => member.role === role);
+    }
+
+    // Apply sorting if requested
+    if (sortField) {
+        filteredData.sort((a, b) => {
+            const aVal = (a as any)[sortField];
+            const bVal = (b as any)[sortField];
+            if (aVal == null && bVal == null) return 0;
+            if (aVal == null) return -1;
+            if (bVal == null) return 1;
+            if (typeof aVal === 'string' && typeof bVal === 'string') {
+                const cmp = aVal.localeCompare(bVal);
+                return (sortOrder === 'desc') ? -cmp : cmp;
+            }
+            if (aVal < bVal) return sortOrder === 'desc' ? 1 : -1;
+            if (aVal > bVal) return sortOrder === 'desc' ? -1 : 1;
+            return 0;
+        });
     }
 
     // Pagination Logic

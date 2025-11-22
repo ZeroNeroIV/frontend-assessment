@@ -46,7 +46,7 @@ export const TeamFilters = () => {
         if (typeof window === 'undefined') return;
         const stored = (localStorage.getItem('teamView') as View) || 'table';
         setViewMode(stored);
-    }, []);
+    }, [setViewMode]);
 
     const ROLE_OPTIONS = useMemo(
         () => [

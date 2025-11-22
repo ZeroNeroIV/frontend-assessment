@@ -26,6 +26,8 @@ export interface UseTeamMembersProps {
     limit?: number;
     search?: string;
     role?: string | null;
+    sortField?: string | null;
+    sortOrder?: 'asc' | 'desc' | null;
 }
 
 export interface TeamMembersResponse {
@@ -44,6 +46,8 @@ export interface FetchOptions {
     limit?: number;
     search?: string;
     role?: string | null;
+    sortField?: string | null;
+    sortOrder?: 'asc' | 'desc' | null;
 }
 
 export interface TeamMemberCardProps {
@@ -56,6 +60,8 @@ export interface TeamTableProps {
     onPaginationChange: (page: number) => void;
     currentPage: number;
     totalPages: number;
+    onSortChange?: (field: string | null, order: 'asc' | 'desc' | null) => void;
+    onLoadMore?: () => void;
 }
 
 export interface GenerateMetadataProps {

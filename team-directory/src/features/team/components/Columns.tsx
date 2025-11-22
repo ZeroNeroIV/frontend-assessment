@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ColumnDef } from '@tanstack/react-table';
 import { TeamMember } from '../types';
 
@@ -8,14 +9,12 @@ export const columns: ColumnDef<TeamMember>[] = [
         cell: ({ row }) => {
             const member = row.original;
             return (
-                <div className="flex items-center gap-4">
-                    <img
-                        src={member.avatar}
-                        alt={member.name}
-                        className="h-10 w-10 rounded-full object-cover border border-slate-200"
-                    />
-                    <span className="font-medium text-slate-900">{member.name}</span>
-                </div>
+                <section className="flex items-center gap-4">
+                    <div className="relative h-10 w-10 rounded-full overflow-hidden border border-slate-200">
+                        <Image src={member.avatar} alt={member.name} fill sizes="40px" className="object-cover" />
+                    </div>
+                    <article className="font-medium text-slate-900">{member.name}</article>
+                </section>
             );
         },
     },
@@ -23,14 +22,14 @@ export const columns: ColumnDef<TeamMember>[] = [
         accessorKey: 'role',
         header: 'Role',
         cell: ({ row }) => (
-            <span className="text-slate-600">{row.getValue('role')}</span>
+            <article className="text-slate-600">{row.getValue('role')}</article>
         ),
     },
     {
         accessorKey: 'email',
         header: 'Email',
         cell: ({ row }) => (
-            <span className="text-slate-500">{row.getValue('email')}</span>
+            <article className="text-slate-500">{row.getValue('email')}</article>
         ),
     },
 ];
