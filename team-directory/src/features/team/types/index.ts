@@ -1,3 +1,5 @@
+export type View = 'table' | 'grid';
+
 export type TeamRole = 'Admin' | 'Agent' | 'Creator';
 
 export interface TeamMember {
@@ -55,3 +57,8 @@ export interface TeamTableProps {
     currentPage: number;
     totalPages: number;
 }
+
+export interface GenerateMetadataProps {
+    params: Promise<{ locale: string; }>;
+}
+

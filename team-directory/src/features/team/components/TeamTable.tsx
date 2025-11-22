@@ -1,7 +1,6 @@
 'use client';
 
 import {
-    ColumnDef,
     flexRender,
     getCoreRowModel,
     getSortedRowModel,
@@ -9,8 +8,8 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
-import { TeamMember, type TeamTableProps } from '../types';
+import { useState } from 'react';
+import { type TeamTableProps } from '../types';
 import { columns } from './Columns';
 
 export const TeamTable = ({
@@ -23,11 +22,9 @@ export const TeamTable = ({
     const t = useTranslations('teamDirectory');
     const [sorting, setSorting] = useState<SortingState>([]);
 
-    const tableColumns = useMemo<ColumnDef<TeamMember>[]>(() => columns, []);
-
     const table = useReactTable({
         data,
-        columns: tableColumns,
+        columns,
         state: {
             sorting,
         },
@@ -44,9 +41,9 @@ export const TeamTable = ({
 
     if (loading) {
         return (
-            <div className="space-y-4">
-                <div className="rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
-                    <div className="overflow-x-auto">
+            <section className="space-y-4">
+                <section className="rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
+                    <section className="overflow-x-auto">
                         <table className="w-full text-left text-sm min-w-[600px]">
                             <thead className="bg-slate-50">
                                 {table.getHeaderGroups().map((headerGroup) => (
@@ -71,44 +68,44 @@ export const TeamTable = ({
                                 {[...Array(5)].map((_, index) => (
                                     <tr key={index} className="animate-pulse">
                                         <td className="px-6 py-4">
-                                            <div className="h-4 bg-slate-200 rounded"></div>
+                                            <section className="h-4 bg-slate-200 rounded"></section>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="h-4 bg-slate-200 rounded"></div>
+                                            <section className="h-4 bg-slate-200 rounded"></section>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="h-4 bg-slate-200 rounded"></div>
+                                            <section className="h-4 bg-slate-200 rounded"></section>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                    </div>
-                </div>
-                <div className="flex justify-between items-center p-4">
-                    <div className="h-4 bg-slate-200 rounded w-32"></div>
-                    <div className="flex space-x-2">
-                        <div className="h-8 w-20 bg-slate-200 rounded"></div>
-                        <div className="h-8 w-20 bg-slate-200 rounded"></div>
-                    </div>
-                </div>
-            </div>
+                    </section>
+                </section>
+                <section className="flex justify-between items-center p-4">
+                    <section className="h-4 bg-slate-200 rounded w-32"></section>
+                    <section className="flex space-x-2">
+                        <section className="h-8 w-20 bg-slate-200 rounded"></section>
+                        <section className="h-8 w-20 bg-slate-200 rounded"></section>
+                    </section>
+                </section>
+            </section>
         );
     }
 
     if (data.length === 0) {
         return (
-            <div className="text-center py-12">
-                <div className="text-slate-500">{t('emptyState')}</div>
-            </div>
+            <section className="text-center py-12">
+                <section className="text-slate-500">{t('emptyState')}</section>
+            </section>
         );
     }
 
     return (
-        <div className="space-y-4">
-            <div className="rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
+        <section className="space-y-4">
+            <section className="rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
                 {/* CRITICAL: The wrapper for mobile responsiveness */}
-                <div className="overflow-x-auto">
+                <section className="overflow-x-auto">
                     <table className="w-full text-left text-sm min-w-[600px]">
                         {/* min-w-[600px] forces the scrollbar to appear on small screens 
                 instead of squishing the columns */}
@@ -147,14 +144,14 @@ export const TeamTable = ({
                             ))}
                         </tbody>
                     </table>
-                </div>
-            </div>
+                </section>
+            </section>
             {/* Pagination */}
-            <div className="flex justify-between items-center p-4">
-                <div className="text-sm text-slate-600">
-                    Page {currentPage} of {totalPages}
-                </div>
-                <div className="flex space-x-2">
+            <section className="flex justify-between items-center p-4">
+                <section className="text-sm text-slate-600">
+                    {t('page')} {currentPage} {t('of')} {totalPages}
+                </section>
+                <section className="flex space-x-2">
                     <button
                         className={`px-4 py-2 rounded-lg ${currentPage === 1
                             ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
@@ -163,7 +160,7 @@ export const TeamTable = ({
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
                     >
-                        Previous
+                        {t('previous')}
                     </button>
                     <button
                         className={`px-4 py-2 rounded-lg ${currentPage === totalPages
@@ -173,10 +170,10 @@ export const TeamTable = ({
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
                     >
-                        Next
+                        {t('next')}
                     </button>
-                </div>
-            </div>
-        </div>
+                </section>
+            </section>
+        </section>
     );
 };

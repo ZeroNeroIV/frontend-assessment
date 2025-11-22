@@ -1,19 +1,26 @@
 {
     "teamDirectory": {
-        "metadata": {
-            "title": "Team Directory",
-            "description": "A filterable and searchable list of all team members."
-        },
+        "title": "Team Directory",
+        "description": "A filterable and searchable list of all team members.",
         "filters": {
             "searchPlaceholder": "Search by name...",
             "roleFilter": "Filter by role",
-            "clearFilters": "Clear all"
+            "clearFilters": "Clear all",
+            "viewGrid": "Grid",
+            "viewTable": "Table",
+            "toggleView": "Toggle View Mode"
         },
         "emptyState": "No team members found",
         "loadMore": "Load more",
         "previous": "Previous",
         "next": "Next",
         "page": "Page",
-        "of": "of"
+        "of": "of",
+        "email": "Email",
+        "role": "Role",
+        "name": "Name",
+        "admin": "Admin",
+        "agent": "Agent",
+        "creator": "Creator"
     }
 }

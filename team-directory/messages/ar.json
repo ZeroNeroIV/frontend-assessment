@@ -1,19 +1,26 @@
 {
     "teamDirectory": {
-        "metadata": {
-            "title": "دليل الفريق",
-            "description": "قائمة قابلة للتصفية والبحث لجميع أعضاء الفريق."
-        },
+        "title": "دليل الفريق",
+        "description": "قائمة قابلة للتصفية والبحث لجميع أعضاء الفريق.",
         "filters": {
             "searchPlaceholder": "البحث بالاسم...",
             "roleFilter": "تصفية حسب الدور",
-            "clearFilters": "مسح الكل"
+            "clearFilters": "مسح الكل",
+            "viewGrid": "شبكة",
+            "viewTable": "جدول",
+            "toggleView": "تبديل وضع العرض"
         },
         "emptyState": "لم يتم العثور على أعضاء في الفريق",
         "loadMore": "تحميل المزيد",
         "previous": "السابق",
         "next": "التالي",
         "page": "الصفحة",
-        "of": "من"
+        "of": "من",
+        "email": "الإيميل",
+        "role": "المنصب",
+        "name": "الاسم",
+        "admin": "المشرف",
+        "agent": "الوكيل",
+        "creator": "المنتج"
     }
 }
